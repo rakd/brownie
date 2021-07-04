@@ -376,7 +376,7 @@ class ContractContainer(_ContractBase):
         """Flatten contract and publish source on the selected explorer"""
 
         # Check required conditions for verifying
-        explorer_tokens = {"etherscan": "ETHERSCAN_TOKEN", "bscscan": "BSCSCAN_TOKEN"}
+        explorer_tokens = {"etherscan": "ETHERSCAN_TOKEN", "bscscan": "BSCSCAN_TOKEN", "ftmscan": "FTMSCAN_TOKEN"}
         url = CONFIG.active_network.get("explorer")
         if url is None:
             raise ValueError("Explorer API not set for this network")
@@ -1876,6 +1876,16 @@ def _fetch_from_explorer(address: str, action: str, silent: bool) -> Dict:
                 "No BSCScan API token set. You may experience issues with rate limiting. "
                 "Visit https://bscscan.com/register to obtain a token, and then store it "
                 "as the environment variable $BSCSCAN_TOKEN",
+                BrownieEnvironmentWarning,
+            )
+    elif "ftmscan" in url:
+        if os.getenv("FTMSCAN_TOKEN"):
+            params["apiKey"] = os.getenv("BSCSCAN_TOKEN")
+        elif not silent:
+            warnings.warn(
+                "No FTMScan API token set. You may experience issues with rate limiting. "
+                "Visit https://ftmscan.com/register to obtain a token, and then store it "
+                "as the environment variable $FTMSCAN_TOKEN",
                 BrownieEnvironmentWarning,
             )
 
