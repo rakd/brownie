@@ -1880,7 +1880,7 @@ def _fetch_from_explorer(address: str, action: str, silent: bool) -> Dict:
             )
     elif "ftmscan" in url:
         if os.getenv("FTMSCAN_TOKEN"):
-            params["apiKey"] = os.getenv("BSCSCAN_TOKEN")
+            params["apiKey"] = os.getenv("FTMSCAN_TOKEN")
         elif not silent:
             warnings.warn(
                 "No FTMScan API token set. You may experience issues with rate limiting. "
